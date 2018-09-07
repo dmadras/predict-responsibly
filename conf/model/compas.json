@@ -1,0 +1,16 @@
+{
+    "name": "compas",
+    "attr0_name": "White",
+    "attr1_name": "Black",
+    "npzfiles": {"inconsistent": "compas/compas_DM_highacc.npz",
+                 "highbias": "compas/compas_DM_highbias.npz",
+                 "highacc": "compas/compas_DM_highacc.npz"},
+    "use_attr": true,
+    "adim": 1,
+    "ydim": 1,
+    "xdim": 21,
+    "hidden_layer_specs": {
+            "layer_sizes": [5],
+            "activ": "sigmoid"
+    }
+}

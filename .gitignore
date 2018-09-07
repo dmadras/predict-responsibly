@@ -1,0 +1,6 @@
+*.pyc
+*.swo
+*.swp
+tfboard_logs/*
+test_figs/*
+*.vim
