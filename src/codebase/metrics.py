@@ -32,7 +32,6 @@ def FP_soft(Y, Ypred):
 def FN_soft(Y, Ypred):
     return np.sum(np.multiply(Y, 1 - Ypred)).astype(np.float32)
 
-#note: TPR + FNR = 1; TNR + FPR = 1
 def TPR(Y, Ypred):
     return TP(Y, Ypred) / pos(Y)
 
@@ -50,12 +49,6 @@ def FPR_soft(Y, Ypred):
 
 def FNR_soft(Y, Ypred):
     return FN_soft(Y, Ypred) / pos(Y)
-
-def calibPosRate(Y, Ypred):
-    return TP(Y, Ypred) / pos(Ypred)
-
-def calibNegRate(Y, Ypred):
-    return TN(Y, Ypred) / neg(Ypred)
 
 def errRate(Y, Ypred):
     return (FP(Y, Ypred) + FN(Y, Ypred)) / float(Y.shape[0])
@@ -86,7 +79,6 @@ def DI_FN(Y, Ypred, A):
     fnr0 = subgroup(FNR, 1 - A, Y, Ypred)
     return abs(fnr1 - fnr0)
 
-
 def DI_FP_soft(Y, Ypred, A):
     fpr1 = subgroup(FPR_soft, A, Y, Ypred)
     fpr0 = subgroup(FPR_soft, 1 - A, Y, Ypred)
@@ -109,25 +101,6 @@ def DP(Ypred, A):
 
 def switch(x0, x1, s):
     return np.multiply(x0, 1. - s) + np.multiply(x1, s)
-
-def ce(y, yp):
-    return - (np.multiply(y, np.log(yp + eps)) + np.multiply(1 - y, np.log(1 - yp + eps)))
-
-def avg_ce(y, yp):
-    return np.mean(ce(y, yp))
-
-def ece(yp):
-    return ce(yp, yp)
-
-def avg_ece(yp):
-    return np.mean(ece(yp))
-
-def calc_opt_idk_loss(y, yp, idk_num):
-    ec = ece(yp)
-    should_idk = np.greater(ec, idk_num)
-    c = ce(y, yp)
-    loss = np.multiply(c, 1. - should_idk) + should_idk * idk_num
-    return np.mean(loss)
 
 '''IDK specific metrics'''
 def idkRate(idk):
